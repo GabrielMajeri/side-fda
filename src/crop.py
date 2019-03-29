@@ -6,7 +6,7 @@ def crop_projection_mask(image):
     """Crops an image from the NYU dataset to the central region where the
     Kinect depth signal is most accurate."""
 
-    return image.crop((40, 44, 602, 472))
+    return image.crop((40, 44, 601, 471))
 
 def generate_crops(original_image):
     """Generates a number of crops from a given image, which can be used to
