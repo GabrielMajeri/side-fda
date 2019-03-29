@@ -1,11 +1,11 @@
 import torch
+from torch.nn.functional import interpolate
 import numpy as np
-from PIL import Image
 
 def upsample_depth(depth, crop_size):
     channels = 1
     height, width = depth.shape
-    resized = torch.nn.functional.interpolate(depth.view(1, channels, height, width),
+    resized = interpolate(depth.view(1, channels, height, width),
                 size=crop_size, mode='bilinear', align_corners=False)
     return resized.view(*crop_size)
 
@@ -51,9 +51,7 @@ def generate_candidates(image_size, depths):
             candidate = candidate / weights / crop_ratio
 
         if idx % 2 == 1:
-            image = Image.fromarray(candidate.numpy())
-            flipped = image.transpose(Image.FLIP_LEFT_RIGHT)
-            candidate = torch.tensor(np.array(flipped))
+            candidate = torch.flip(candidate, (1,))
 
         candidate = upsample_depth(candidate, (72, 96))
 
