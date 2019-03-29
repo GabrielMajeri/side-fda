@@ -20,7 +20,7 @@ def generate_crops(original_image):
     for idx in range(18):
         image = original_image
 
-        if idx % 2 == 0:
+        if idx % 2 == 1:
             image = image.transpose(Image.FLIP_LEFT_RIGHT)
 
         crop_ratio = 1 - 0.05 * np.ceil(idx // 2)
